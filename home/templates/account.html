@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#101a30">
+    <meta name="description" content="Sign in or create an account for Indian Logic & Computing.">
+    <title>{% if account_mode == 'signup' %}Create account{% else %}Sign in{% endif %} | Indian Logic &amp; Computing</title>
+    <link rel="stylesheet" href="{% static 'home/css/account.css' %}">
+</head>
+<body>
+    <main class="account-page">
+        <header class="account-header">
+            <a class="account-brand" href="{% url 'home' %}"><span class="brand-mark" aria-hidden="true">∴</span> Indian Logic <span>&amp; Computing</span></a>
+            <a class="back-link" href="{% url 'home' %}">Back to learning <span aria-hidden="true">↗</span></a>
+        </header>
+
+        <section class="account-layout" aria-label="{% if account_mode == 'signup' %}Create account{% else %}Sign in{% endif %}">
+            <div class="account-story">
+                <span class="eyebrow"><span></span> A space for curious minds</span>
+                <h1>Ideas have<br><em>many dimensions.</em></h1>
+                <p>Explore the meeting point of ancient reasoning and modern computing. Your next idea starts here.</p>
+                <div class="logic-orb" aria-hidden="true">
+                    <span class="orb-halo"></span>
+                    <span class="orb-ring orb-ring-one"></span>
+                    <span class="orb-ring orb-ring-two"></span>
+                    <span class="orb-ring orb-ring-three"></span>
+                    <span class="orb-globe"><span class="orb-symbol">∴</span><span class="orb-cross"></span></span>
+                    <span class="orb-node orb-node-one"></span>
+                    <span class="orb-node orb-node-two"></span>
+                    <span class="orb-node orb-node-three"></span>
+                    <span class="orb-base"></span>
+                </div>
+                <div class="story-caption"><span class="caption-line"></span><span>KNOWLEDGE · REASON · DISCOVERY</span></div>
+            </div>
+
+            <div class="account-stage">
+                <section class="account-card">
+                    <div class="card-topline"><span>INDIAN LOGIC &amp; COMPUTING</span><span class="card-index">01 / 02</span></div>
+                    <div class="card-heading">
+                        <span class="card-kicker">{% if account_mode == 'signup' %}YOUR JOURNEY STARTS HERE{% else %}WELCOME BACK{% endif %}</span>
+                        <h2>{% if account_mode == 'signup' %}Create your<br>account{% else %}Good to see<br>you again{% endif %}</h2>
+                        <p>{% if account_mode == 'signup' %}A few details, then you’re in.{% else %}Sign in to continue exploring.{% endif %}</p>
+                    </div>
+
+                    <form class="account-form" method="post">
+                        {% csrf_token %}
+                        {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
+                        {% if form.non_field_errors %}
+                            <div class="form-errors" role="alert">{{ form.non_field_errors }}</div>
+                        {% endif %}
+                        {% for field in form %}
+                            <div class="form-field{% if field.errors %} has-error{% endif %}">
+                                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                {{ field }}
+                                {% if field.errors %}<div class="field-errors" role="alert">{{ field.errors }}</div>{% endif %}
+                                {% if field.help_text %}<div class="field-help">{{ field.help_text|safe }}</div>{% endif %}
+                            </div>
+                        {% endfor %}
+                        <button class="account-submit" type="submit">
+                            <span>{% if account_mode == 'signup' %}Create account{% else %}Sign in{% endif %}</span>
+                            <span class="submit-arrow" aria-hidden="true">↗</span>
+                        </button>
+                    </form>
+
+                    <p class="account-switch">
+                        {% if account_mode == 'signup' %}
+                            Already have an account? <a href="{% url 'account_login' %}">Sign in</a>
+                        {% else %}
+                            New to the site? <a href="{% url 'account_signup' %}">Create an account</a>
+                        {% endif %}
+                    </p>
+                    <div class="card-foot"><span>Built on the joy of asking why.</span><span aria-hidden="true">✳</span></div>
+                </section>
+                <span class="stage-shadow" aria-hidden="true"></span>
+            </div>
+        </section>
+        <footer class="account-footer"><span>© {% now "Y" %} Indian Logic &amp; Computing</span><span>Think deeply. See differently.</span></footer>
+    </main>
+    <script src="{% static 'home/js/account.js' %}" defer></script>
+</body>
+</html>

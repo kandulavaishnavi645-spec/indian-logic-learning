@@ -1,0 +1,24 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}My orders | Morrow{% endblock %}
+
+{% block content %}
+<section class="page-shell">
+    <p class="eyebrow">Good things headed your way</p>
+    <h1 class="page-title">Your orders<span class="title-dot">.</span></h1>
+    {% for order in orders %}
+        <a class="order-card" href="{% url 'shop:order_detail' order.pk %}">
+            <div>
+                <h2>Order #{{ order.pk }}</h2>
+                <p>{{ order.created_at|date:"F j, Y" }} · ${{ order.total }}</p>
+            </div>
+            <span class="order-status">{{ order.get_status_display }}</span>
+        </a>
+    {% empty %}
+        <div class="empty-cart">
+            <p>Your next favorite is waiting to be found.</p>
+            <a class="button button-dark" href="{% url 'shop:product_list' %}">Explore the collection <span aria-hidden="true">↗</span></a>
+        </div>
+    {% endfor %}
+</section>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}Sign in | Morrow{% endblock %}
+
+{% block content %}
+<section class="page-shell">
+    <div class="form-card">
+        <p class="eyebrow">Good to see you again</p>
+        <h1 class="page-title">Welcome back.</h1>
+        <p class="form-intro">Sign in to pick up right where you left off.</p>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="hidden" name="next" value="{{ next }}">
+            <button class="button button-dark" type="submit">Sign in <span aria-hidden="true">→</span></button>
+        </form>
+        <p class="form-switch">New around here? <a href="{% url 'shop:register' %}">Create an account</a></p>
+    </div>
+</section>
+{% endblock %}

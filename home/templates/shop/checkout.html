@@ -1,0 +1,18 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}Checkout | Morrow{% endblock %}
+
+{% block content %}
+<section class="page-shell">
+    <div class="form-card">
+        <p class="eyebrow">The final little details</p>
+        <h1 class="page-title">Checkout.</h1>
+        <p class="form-intro">Where should we send your order? Payment is not processed by this demo backend.</p>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="button button-dark" type="submit">Place your order <span aria-hidden="true">→</span></button>
+        </form>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,16 @@
+__pycache__/
+*.py[cod]
+*$py.class
+
+.env
+.venv/
+venv/
+
+db.sqlite3
+staticfiles/
+media/
+home/tempCodeRunnerFile.py
+
+.pytest_cache/
+.coverage
+htmlcov/

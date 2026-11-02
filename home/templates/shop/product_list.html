@@ -1,0 +1,111 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}Shop everyday favorites | Morrow{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-copy">
+        <p class="eyebrow"><span class="eyebrow-mark"></span> A better kind of everyday</p>
+        <h1>Find joy in<br>the <em>little things.</em></h1>
+        <p class="hero-description">Thoughtful pieces for the way you live. Meet your new everyday favorites.</p>
+        <a class="button button-dark" href="#collection">Explore the collection <span aria-hidden="true">↘</span></a>
+        <div class="hero-note"><span class="hero-note-star">✳</span> Considered essentials, chosen with care.</div>
+    </div>
+    <div class="hero-visual" role="img" aria-label="A curated collection of everyday essentials">
+        <div class="hero-image"></div>
+        <div class="hero-sticker"><span>THE<br>GOOD<br>STUFF</span><span class="sticker-star">✳</span></div>
+        <div class="hero-caption">Little things. A lot of joy.</div>
+    </div>
+    <div class="hero-index"><span>01</span><span class="index-line"></span><span>04</span></div>
+</section>
+
+<section class="promise-strip" aria-label="Our promises">
+    <div><span class="promise-icon">✳</span><span>Thoughtfully selected</span></div>
+    <div><span class="promise-icon">♡</span><span>Made for everyday</span></div>
+    <div><span class="promise-icon">↗</span><span>Free shipping over $75</span></div>
+</section>
+
+<section class="collection-section" id="collection">
+    <div class="section-heading">
+        <div>
+            <p class="eyebrow">A few very good things</p>
+            <h2>Meet your <em>new favorites.</em></h2>
+        </div>
+        <span class="product-count">{{ products|length }} <span>thoughtful finds</span></span>
+    </div>
+
+    <div class="shop-toolbar">
+        <div class="category-list" aria-label="Filter by category">
+            <a class="category-chip{% if not active_category %} is-active{% endif %}" href="{% url 'shop:product_list' %}{% if search_query %}?q={{ search_query|urlencode }}{% endif %}">Everything</a>
+            {% for category in categories %}
+                <a class="category-chip{% if active_category == category.slug %} is-active{% endif %}" href="?category={{ category.slug }}{% if search_query %}&q={{ search_query|urlencode }}{% endif %}">{{ category.name }}</a>
+            {% endfor %}
+        </div>
+        <div class="toolbar-controls">
+            <form class="search-form" method="get" role="search">
+                {% if active_category %}<input type="hidden" name="category" value="{{ active_category }}">{% endif %}
+                <label class="sr-only" for="q">Search products</label>
+                <input id="q" type="search" name="q" value="{{ search_query }}" placeholder="Find something..." autocomplete="off">
+                <button type="submit" aria-label="Search">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.3"></circle><path d="m16 16 4 4"></path></svg>
+                </button>
+            </form>
+            <label class="sort-control" for="sort-products"><span>Sort:</span>
+                <select id="sort-products" aria-label="Sort products">
+                    <option value="featured">Featured</option>
+                    <option value="price-low">Price: low to high</option>
+                    <option value="price-high">Price: high to low</option>
+                    <option value="name">Name: A to Z</option>
+                </select>
+            </label>
+        </div>
+    </div>
+
+    <div class="product-grid" id="product-grid">
+        {% for product in products %}
+            <article class="product-card" data-price="{{ product.price }}" data-name="{{ product.name|lower }}">
+                <a class="product-image-link" href="{% url 'shop:product_detail' product.slug %}" aria-label="View {{ product.name }}">
+                    <div class="product-image">
+                        <img src="{% cycle 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=85' 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=85' 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=85' 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=800&q=85' %}" alt="{{ product.name }}" loading="lazy">
+                        {% if forloop.counter == 1 %}<span class="product-badge">A good place to start</span>{% endif %}
+                        <span class="product-quick-view">Take a closer look <span aria-hidden="true">↗</span></span>
+                    </div>
+                </a>
+                <div class="product-info">
+                    <div>
+                        <p class="product-category">{{ product.category.name }}</p>
+                        <h3><a href="{% url 'shop:product_detail' product.slug %}">{{ product.name }}</a></h3>
+                    </div>
+                    <span class="product-price">${{ product.price }}</span>
+                </div>
+                <p class="product-description">{{ product.description|truncatewords:13 }}</p>
+                <form method="post" action="{% url 'shop:add_to_cart' product.pk %}" class="quick-add-form">
+                    {% csrf_token %}
+                    <button class="quick-add" type="submit">Add to bag <span aria-hidden="true">+</span></button>
+                </form>
+            </article>
+        {% empty %}
+            <div class="empty-state">
+                <span class="empty-sparkle">✳</span>
+                {% if search_query %}
+                    <h3>No favorites found just yet.</h3>
+                    <p>Try a different search or browse the full collection.</p>
+                    <a class="button button-dark" href="{% url 'shop:product_list' %}">See everything</a>
+                {% else %}
+                    <h3>Something lovely is on its way.</h3>
+                    <p>There aren't any products in this collection yet. Check back soon.</p>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+    {% if products %}
+        <p class="collection-footnote">Good things don't have to be complicated. <span>✳</span></p>
+    {% endif %}
+</section>
+
+<section class="closing-banner">
+    <div class="closing-mark">m<span>.</span></div>
+    <div><p class="eyebrow">A little more intentional</p><h2>Keep the things<br>that <em>make you smile.</em></h2></div>
+    <a class="text-link" href="#collection">Find your something <span aria-hidden="true">↗</span></a>
+</section>
+{% endblock %}

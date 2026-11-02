@@ -1,0 +1,295 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#172a40">
+    <meta name="description" content="Indian logic and philosophy, its relation to modern computing, and an interactive quiz.">
+    <title>Indian Logic &amp; Computing</title>
+    <link rel="stylesheet" href="{% static 'home/css/logic.css' %}">
+</head>
+<body>
+    <main class="reference-pages">
+        {% if page == 'home' %}
+        <section class="reference-page philosophy-page" id="home">
+            <header class="mini-header">
+                <a class="mini-brand" href="{% url 'home' %}">Indian Logic &amp; Computing</a>
+                <nav aria-label="Philosophy page navigation">
+                    <a class="current" href="{% url 'home' %}" aria-current="page">Home</a>
+                    <a href="{% url 'relation' %}">Relation</a>
+                    <a href="{% url 'questions' %}">Questions</a>
+                    {% if user.is_authenticated %}
+                        <form class="learning-logout" method="post" action="{% url 'account_logout' %}">{% csrf_token %}<button type="submit">Sign out</button></form>
+                    {% else %}
+                        <a href="{% url 'account_login' %}">Log in</a>
+                        <a href="{% url 'account_signup' %}">Sign up</a>
+                    {% endif %}
+                </nav>
+            </header>
+            <div class="page-hero philosophy-hero">
+                <div>
+                    <h1>Indian Logic and<br>Philosophy</h1>
+                    <p>Based on M. Hiriyanna’s <em>Outlines of Indian Philosophy</em></p>
+                </div>
+                <div class="temple-art" role="img" aria-label="Illustration of an Indian temple">
+                    <span class="temple-distant-hill"></span>
+                    <span class="temple-sun"></span><span class="temple-dome"></span>
+                    <span class="temple-pagoda"></span>
+                    <span class="temple-finial"></span>
+                    <span class="temple-side-spire temple-side-spire-left"></span>
+                    <span class="temple-side-spire temple-side-spire-right"></span>
+                    <span class="temple-sanctum"></span>
+                    <span class="temple-roof"></span><span class="temple-pillars"></span>
+                    <span class="temple-steps"></span>
+                    <span class="temple-ground"></span>
+                </div>
+            </div>
+
+            <div class="page-content">
+                <section class="intro-block">
+                    <h2>Introduction</h2>
+                    <p>Indian philosophy is a rich tradition of systematic thought that explores reality, knowledge and the means to attain valid knowledge. Among its six classical schools (darśanas), Nyāya and Vaiśeṣika are especially important to the study of logic and reasoning.</p>
+                </section>
+
+                <section class="systems-block">
+                    <h2>The Six Systems of Indian Philosophy</h2>
+                    <div class="systems-grid">
+                        <article class="system-card coral"><h3>Nyāya</h3><p>Logic and valid knowledge</p></article>
+                        <article class="system-card blue"><h3>Vaiśeṣika</h3><p>Categories of reality</p></article>
+                        <article class="system-card gold"><h3>Sāṃkhya</h3><p>Nature and consciousness</p></article>
+                        <article class="system-card mint"><h3>Yoga</h3><p>Discipline and liberation</p></article>
+                        <article class="system-card lilac"><h3>Mīmāṃsā</h3><p>Ritual and interpretation</p></article>
+                        <article class="system-card lavender"><h3>Vedānta</h3><p>Self and ultimate reality</p></article>
+                    </div>
+                </section>
+
+                <section class="school-summary">
+                    <h2>Nyāya Philosophy</h2>
+                    <ul>
+                        <li>Founded by Gautama (Akṣapāda).</li>
+                        <li>Focuses on logic, reasoning and the means of valid knowledge (pramāṇas).</li>
+                        <li>Develops methods to analyse arguments and identify fallacies.</li>
+                    </ul>
+                </section>
+
+                <section class="pramana-block">
+                    <h2>The Four Pramāṇas (Means of Valid Knowledge)</h2>
+                    <div class="pramana-grid">
+                        <article class="pramana-card coral"><h3>Pratyakṣa</h3><p>Perception through the senses.</p><span>◉</span></article>
+                        <article class="pramana-card blue"><h3>Anumāna</h3><p>Inference from evidence and reasoning.</p><span>∴</span></article>
+                        <article class="pramana-card gold"><h3>Upamāna</h3><p>Knowing through comparison and similarity.</p><span>▱</span></article>
+                        <article class="pramana-card mint"><h3>Śabda</h3><p>Knowledge from reliable testimony.</p><span>“ ”</span></article>
+                    </div>
+                </section>
+
+                <section class="argument-block">
+                    <h2>The Five-Part Nyāya Argument (Syllogism)</h2>
+                    <ol>
+                        <li><b>Pratijñā</b> — The proposition (e.g., The hill has fire).</li>
+                        <li><b>Hetu</b> — The reason (e.g., Because it has smoke).</li>
+                        <li><b>Udāharaṇa</b> — A general example (e.g., Wherever there is smoke, there is fire).</li>
+                        <li><b>Upanaya</b> — Application to the case (e.g., The hill has smoke).</li>
+                        <li><b>Nigamana</b> — The conclusion (e.g., Therefore, the hill has fire).</li>
+                    </ol>
+                </section>
+
+                <section class="school-summary vaisheshika-summary">
+                    <h2>Vaiśeṣika Philosophy</h2>
+                    <ul>
+                        <li>Founded by Kaṇāda.</li>
+                        <li>Focuses on the classification of reality into categories (padārthas).</li>
+                        <li>Investigates the nature of substances such as substance, quality, action, generality, particularity and inherence.</li>
+                    </ul>
+                </section>
+            </div>
+        </section>
+        {% endif %}
+
+        {% if page == 'relation' %}
+        <section class="reference-page relation-page" id="relation">
+            <header class="mini-header">
+                <a class="mini-brand" href="{% url 'home' %}">Indian Logic &amp; Computing</a>
+                <nav aria-label="Relation page navigation">
+                    <a href="{% url 'home' %}">Home</a>
+                    <a class="current" href="{% url 'relation' %}" aria-current="page">Relation</a>
+                    <a href="{% url 'questions' %}">Questions</a>
+                    {% if user.is_authenticated %}
+                        <form class="learning-logout" method="post" action="{% url 'account_logout' %}">{% csrf_token %}<button type="submit">Sign out</button></form>
+                    {% else %}
+                        <a href="{% url 'account_login' %}">Log in</a>
+                        <a href="{% url 'account_signup' %}">Sign up</a>
+                    {% endif %}
+                </nav>
+            </header>
+            <div class="page-hero relation-hero">
+                <div>
+                    <h1>Relation Between<br>Indian Logic and<br>Modern Computing</h1>
+                    <p>Based on Dr. V. S. Sarma’s research paper, “A Survey of Indian Logic from the View Point of Computer Science”.</p>
+                </div>
+                <div class="brain-art" role="img" aria-label="Illustration of a brain and computing network">
+                    <span class="brain-orbit brain-orbit-wide"></span>
+                    <span class="brain-orbit brain-orbit-tilted"></span>
+                    <span class="brain-pedestal"></span>
+                    <span class="brain-core"></span>
+                    <span class="brain-ring"></span>
+                    <svg class="brain-illustration" viewBox="0 0 240 210" aria-hidden="true">
+                        <path class="brain-outline" d="M119 46c-12-19-40-17-48 2-17-5-33 9-30 27-16 8-17 30-4 40-9 17 1 36 18 39 5 19 25 27 41 17 7 11 17 15 27 14V47c-1 0-3-1-4-1Zm4 0c12-19 40-17 48 2 17-5 33 9 30 27 16 8 17 30 4 40 9 17-1 36-18 39-5 19-25 27-41 17-7 11-17 15-27 14V47" />
+                        <path class="brain-folds" d="M82 61c-13 3-17 16-11 24m-20 1c12 0 18 9 14 19m-1 22c11-8 22-4 24 7m-2-58c15-1 21 9 17 19m-2 34c-9 7-8 17-3 23m65-91c13 3 17 16 11 24m20 1c-12 0-18 9-14 19m1 22c-11-8-22-4-24 7m2-58c-15-1-21 9-17 19m2 34c9 7 8 17 3 23" />
+                        <path class="brain-circuit" d="M48 53 75 66 91 50m-42 44 31-4 21 17m-36 37 29-8 19 17m60-100-27 13-16-15m42 45-31-4-21 17m36 37-29-8-19 17" />
+                        <g class="brain-points"><circle cx="48" cy="53" r="3"/><circle cx="75" cy="66" r="3"/><circle cx="91" cy="50" r="3"/><circle cx="49" cy="94" r="3"/><circle cx="80" cy="90" r="3"/><circle cx="106" cy="107" r="3"/><circle cx="65" cy="144" r="3"/><circle cx="94" cy="136" r="3"/><circle cx="113" cy="153" r="3"/><circle cx="190" cy="53" r="3"/><circle cx="163" cy="66" r="3"/><circle cx="147" cy="50" r="3"/><circle cx="191" cy="94" r="3"/><circle cx="160" cy="90" r="3"/><circle cx="134" cy="107" r="3"/><circle cx="175" cy="144" r="3"/><circle cx="146" cy="136" r="3"/><circle cx="127" cy="153" r="3"/></g>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="page-content">
+                <section class="intro-block">
+                    <h2>Overview</h2>
+                    <p>V. S. Sarma (1994) explores how the principles of Indian logic, especially Nyāya and Vaiśeṣika, can be compared in relation to modern computer science and Artificial Intelligence (AI). The paper shows that ideas about knowledge, reasoning and classification in Indian logic can be compared with knowledge-based intelligent systems.</p>
+                </section>
+
+                <section class="mapping-block">
+                    <h2>Mapping of Pramāṇas and Computing Concepts</h2>
+                    <div class="table-scroll">
+                        <table>
+                            <thead><tr><th>Indian concept</th><th>Meaning</th><th>Related computing concept</th></tr></thead>
+                            <tbody>
+                                <tr><th scope="row">Pratyakṣa</th><td>Perception</td><td>Data input from sensors or data sources</td></tr>
+                                <tr><th scope="row">Anumāna</th><td>Inference</td><td>Logical inference or rule-based reasoning</td></tr>
+                                <tr><th scope="row">Upamāna</th><td>Comparison</td><td>Learning by analogy (pattern recognition)</td></tr>
+                                <tr><th scope="row">Śabda</th><td>Verbal testimony</td><td>Knowledge acquisition from human experts</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section class="ai-block">
+                    <h2>Knowledge-Based AI System</h2>
+                    <p>A knowledge-based system can be compared with how Indian logic describes reasoning.</p>
+                    <div class="ai-flow" aria-label="Knowledge acquisition to knowledge base to inference engine to result">
+                        <article><b>01</b><strong>Knowledge<br>Acquisition</strong><small>Collecting information<br>from experts or sources</small></article>
+                        <span aria-hidden="true">→</span>
+                        <article><b>02</b><strong>Knowledge<br>Base</strong><small>Store facts<br>and rules</small></article>
+                        <span aria-hidden="true">→</span>
+                        <article class="flow-active"><b>03</b><strong>Inference<br>Engine</strong><small>Apply logical<br>rules</small></article>
+                        <span aria-hidden="true">→</span>
+                        <article class="flow-result"><b>04</b><strong>Result /<br>Recommendation</strong><small>Present a reasoned<br>result</small></article>
+                    </div>
+                </section>
+
+                <section class="example-block">
+                    <h2>Example: Medical Expert System (MYCIN)</h2>
+                    <p>The paper discusses MYCIN as an early medical expert system. It can compare symptoms entered by a clinician with knowledge and rules, then provide a possible recommendation for professional review.</p>
+                    <p class="example-note">This is an illustrative comparison between rule-based computing and structured reasoning—not a claim that the two traditions are identical.</p>
+                </section>
+
+                <section class="reasoning-block">
+                    <h2>Nyāya Syllogism and Computer Reasoning</h2>
+                    <p>The Nyāya syllogism explains how a conclusion follows from a reason and an example.</p>
+                    <div class="reasoning-columns">
+                        <ol>
+                            <li><b>Pratijñā</b> — The hill has fire.</li>
+                            <li><b>Hetu</b> — Because it has smoke.</li>
+                            <li><b>Udāharaṇa</b> — Where there is smoke, there is fire.</li>
+                            <li><b>Upanaya</b> — The hill has smoke.</li>
+                            <li><b>Nigamana</b> — Therefore, the hill has fire.</li>
+                        </ol>
+                        <pre><code>if smoke(hill)
+and smoke_implies_fire:
+    conclude(fire(hill))</code></pre>
+                    </div>
+                </section>
+
+                <section class="takeaways-block">
+                    <h2>Key Takeaways from the Research Paper</h2>
+                    <ul>
+                        <li>Indian logic provides systematic accounts of knowledge and inference.</li>
+                        <li>Knowledge-based AI systems use structured facts and rules to process information.</li>
+                        <li>Comparisons illuminate similarities while respecting the differences between the traditions.</li>
+                    </ul>
+                </section>
+            </div>
+        </section>
+        {% endif %}
+
+        {% if page == 'questions' %}
+        <section class="reference-page quiz-page" id="questions">
+            <header class="mini-header">
+                <a class="mini-brand" href="{% url 'home' %}">Indian Logic &amp; Computing</a>
+                <nav aria-label="Quiz page navigation">
+                    <a href="{% url 'home' %}">Home</a>
+                    <a href="{% url 'relation' %}">Relation</a>
+                    <a class="current" href="{% url 'questions' %}" aria-current="page">Questions</a>
+                    {% if user.is_authenticated %}
+                        <form class="learning-logout" method="post" action="{% url 'account_logout' %}">{% csrf_token %}<button type="submit">Sign out</button></form>
+                    {% else %}
+                        <a href="{% url 'account_login' %}">Log in</a>
+                        <a href="{% url 'account_signup' %}">Sign up</a>
+                    {% endif %}
+                </nav>
+            </header>
+            <div class="quiz-hero">
+                <div><h1>Test Your Understanding</h1><p>Questions based on Indian philosophies and its relation to modern computing.</p></div>
+                <span class="quiz-mark" aria-hidden="true">?</span>
+            </div>
+            {% if quiz_error %}<p class="quiz-error" role="alert">{{ quiz_error }}</p>{% endif %}
+            <div class="quiz-tabs" role="tablist" aria-label="Quiz format">
+                <button class="quiz-tab{% if quiz_mode == 'multiple-choice' and not quiz_result %} is-active{% endif %}" id="multiple-choice-tab" type="button" role="tab" aria-selected="{% if quiz_mode == 'multiple-choice' and not quiz_result %}true{% else %}false{% endif %}" aria-controls="multiple-choice-panel">Multiple Choice Questions</button>
+                <button class="quiz-tab{% if quiz_mode == 'short-answer' and not quiz_result %} is-active{% endif %}" id="short-answer-tab" type="button" role="tab" aria-selected="{% if quiz_mode == 'short-answer' and not quiz_result %}true{% else %}false{% endif %}" aria-controls="short-answer-panel">Short Answer Questions</button>
+                <button class="quiz-tab{% if quiz_result %} is-active{% endif %}" id="quiz-result-tab" type="button" role="tab" aria-selected="{% if quiz_result %}true{% else %}false{% endif %}" aria-controls="quiz-result-panel"{% if not quiz_result %} disabled{% endif %}>Quiz Result</button>
+            </div>
+            <div class="quiz-panel" id="multiple-choice-panel" role="tabpanel" aria-labelledby="multiple-choice-tab"{% if quiz_mode == 'short-answer' or quiz_result %} hidden{% endif %}>
+                {% if questions %}
+                    <form class="quiz-form" method="post" action="#questions">
+                        {% csrf_token %}<input type="hidden" name="quiz_type" value="multiple-choice">
+                        {% for question in questions %}
+                            <fieldset class="question-card{% if question.is_correct is True %} is-correct{% elif question.is_correct is False %} is-incorrect{% endif %}">
+                                <legend><span class="question-number">{{ forloop.counter }}</span><span>{{ question.prompt }}</span></legend>
+                                <div class="option-list">
+                                    {% for option in question.options %}
+                                        <label class="quiz-option{% if question.selected_answer == forloop.counter0 and question.is_correct is True %} option-correct{% elif question.selected_answer == forloop.counter0 and question.is_correct is False %} option-incorrect{% endif %}">
+                                            <input type="radio" name="question_{{ question.pk }}" value="{{ forloop.counter0 }}" {% if question.selected_answer == forloop.counter0 %}checked{% endif %} required>
+                                            <span class="option-marker" aria-hidden="true"></span><span class="option-letter">{% cycle 'A' 'B' 'C' 'D' %}.</span><span>{{ option }}</span>
+                                        </label>
+                                    {% endfor %}
+                                </div>
+                                {% if question.is_correct != None %}<p class="answer-note"><strong>{% if question.is_correct %}Correct.{% else %}Correct answer: {{ question.answer }}.{% endif %}</strong> {{ question.explanation }}</p>{% endif %}
+                            </fieldset>
+                        {% endfor %}
+                        <button class="submit-button" type="submit">Submit Answers</button>
+                    </form>
+                {% else %}<p class="empty-quiz">Questions are being prepared. Please check back soon.</p>{% endif %}
+            </div>
+            <div class="quiz-panel" id="short-answer-panel" role="tabpanel" aria-labelledby="short-answer-tab"{% if quiz_mode != 'short-answer' or quiz_result %} hidden{% endif %}>
+                {% if short_questions %}
+                    <form class="quiz-form" method="post" action="#questions">
+                        {% csrf_token %}<input type="hidden" name="quiz_type" value="short-answer">
+                        {% for question in short_questions %}
+                            <fieldset class="question-card{% if question.is_correct is True %} is-correct{% elif question.is_correct is False %} is-incorrect{% endif %}">
+                                <legend><span class="question-number">{{ forloop.counter }}</span><span>{{ question.prompt }}</span></legend>
+                                <label class="short-answer-label" for="short-answer-{{ question.pk }}">Your answer</label>
+                                <input class="short-answer-input" id="short-answer-{{ question.pk }}" type="text" name="question_{{ question.pk }}" value="{{ question.submitted_answer }}" required autocomplete="off">
+                                {% if question.is_correct != None %}<p class="answer-note"><strong>{% if question.is_correct %}Correct.{% else %}Review the idea and try again.{% endif %}</strong> {{ question.explanation }}</p>{% endif %}
+                            </fieldset>
+                        {% endfor %}
+                        <button class="submit-button" type="submit">Submit Answers</button>
+                    </form>
+                {% else %}<p class="empty-quiz">Short-answer questions are being prepared. Please check back soon.</p>{% endif %}
+            </div>
+            <div class="quiz-panel result-panel" id="quiz-result-panel" data-quiz-mode="{{ quiz_mode }}" role="tabpanel" aria-labelledby="quiz-result-tab"{% if not quiz_result %} hidden{% endif %}>
+                {% if quiz_result %}
+                    <div class="score-card"><h2>You got {{ quiz_result.score }} out of {{ quiz_result.total }} right.</h2><p>{% if quiz_result.percent == 100 %}Excellent work!{% elif quiz_result.percent >= 60 %}Good work!{% else %}Keep studying and try again.{% endif %}</p><button class="restart-button" type="button" data-restart-quiz>Try Quiz Again</button></div>
+                    <h2 class="review-heading">Answer Review</h2>
+                    {% if quiz_mode == 'short-answer' %}
+                        {% for question in short_questions %}<article class="result-review-item{% if question.is_correct %} is-correct{% else %} is-incorrect{% endif %}"><span class="review-state">{% if question.is_correct %}✓{% else %}×{% endif %}</span><div><h3>{{ question.prompt }}</h3><p>Your answer: {{ question.submitted_answer }}</p>{% if not question.is_correct %}<p>Accepted answer: {{ question.accepted_answers|first }}</p>{% endif %}<p>{{ question.explanation }}</p></div></article>{% endfor %}
+                    {% else %}
+                        {% for question in questions %}<article class="result-review-item{% if question.is_correct %} is-correct{% else %} is-incorrect{% endif %}"><span class="review-state">{% if question.is_correct %}✓{% else %}×{% endif %}</span><div><h3>{{ question.prompt }}</h3><p>Your answer: {{ question.selected_answer_text }}</p>{% if not question.is_correct %}<p>Correct answer: {{ question.answer }}</p>{% endif %}<p>{{ question.explanation }}</p></div></article>{% endfor %}
+                    {% endif %}
+                {% endif %}
+            </div>
+        </section>
+        {% endif %}
+    </main>
+    <script src="{% static 'home/js/logic.js' %}" defer></script>
+</body>
+</html>

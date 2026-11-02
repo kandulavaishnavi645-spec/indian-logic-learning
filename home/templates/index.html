@@ -1,0 +1,14 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}Welcome to Morrow{% endblock %}
+
+{% block content %}
+<section class="page-shell">
+    <div class="empty-state">
+        <span class="empty-sparkle">✳</span>
+        <h1 class="page-title">Good things for the everyday.</h1>
+        <p>Thoughtful pieces for the way you live. Meet your new everyday favorites.</p>
+        <a class="button button-dark" href="{% url 'shop:product_list' %}">Explore the collection <span aria-hidden="true">↗</span></a>
+    </div>
+</section>
+{% endblock %}

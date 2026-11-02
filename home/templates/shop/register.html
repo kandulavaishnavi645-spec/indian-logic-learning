@@ -1,0 +1,19 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}Create an account | Morrow{% endblock %}
+
+{% block content %}
+<section class="page-shell">
+    <div class="form-card">
+        <p class="eyebrow">Come on in</p>
+        <h1 class="page-title">Make yourself<br>at home.</h1>
+        <p class="form-intro">Create an account to save your bag and keep track of the good things headed your way.</p>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="button button-dark" type="submit">Create account <span aria-hidden="true">→</span></button>
+        </form>
+        <p class="form-switch">Already have an account? <a href="{% url 'shop:login' %}">Sign in</a></p>
+    </div>
+</section>
+{% endblock %}

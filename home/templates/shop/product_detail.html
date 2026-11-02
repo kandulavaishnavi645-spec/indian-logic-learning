@@ -1,0 +1,35 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}{{ product.name }} | Morrow{% endblock %}
+
+{% block content %}
+<section class="page-shell">
+    <a class="back-link" href="{% url 'shop:product_list' %}"><span aria-hidden="true">←</span> Back to the collection</a>
+    <div class="detail-layout">
+        <div class="detail-art">
+            <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1000&q=85" alt="{{ product.name }}">
+        </div>
+        <div class="detail-copy">
+            <p class="eyebrow">{{ product.category.name }}</p>
+            <h1>{{ product.name }}</h1>
+            <p class="detail-price">${{ product.price }}</p>
+            {% if product.description %}
+                <div class="detail-description">{{ product.description|linebreaks }}</div>
+            {% else %}
+                <p class="detail-description">A thoughtful little addition to your everyday. Chosen for its quality, made to be loved for a long time.</p>
+            {% endif %}
+            {% if product.stock %}
+                <p class="stock-note">● In stock and ready to make your day</p>
+                <form method="post" action="{% url 'shop:add_to_cart' product.pk %}">
+                    {% csrf_token %}
+                    <button class="button button-dark detail-add" type="submit">Add to bag <span aria-hidden="true">↗</span></button>
+                </form>
+            {% else %}
+                <p class="stock-note">Currently out of stock</p>
+            {% endif %}
+            <hr class="detail-divider">
+            <div class="detail-perks"><span>Carefully packed</span><span>Easy returns</span></div>
+        </div>
+    </div>
+</section>
+{% endblock %}

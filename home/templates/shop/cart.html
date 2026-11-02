@@ -1,0 +1,52 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}Your bag | Morrow{% endblock %}
+
+{% block content %}
+<section class="page-shell">
+    <p class="eyebrow">Saved for your everyday</p>
+    <h1 class="page-title">Your bag<span class="title-dot">.</span></h1>
+    {% if items %}
+        <div class="cart-layout">
+            <div class="cart-list">
+                {% for item in items %}
+                    <article class="cart-item">
+                        <a class="cart-thumb" href="{% url 'shop:product_detail' item.product.slug %}">
+                            <img src="{% cycle 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=300&q=75' 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=300&q=75' 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=300&q=75' %}" alt="">
+                        </a>
+                        <div>
+                            <p>{{ item.product.category.name }}</p>
+                            <h2><a href="{% url 'shop:product_detail' item.product.slug %}">{{ item.product.name }}</a></h2>
+                            <p>${{ item.product.price }} each</p>
+                            <form class="quantity-form" method="post" action="{% url 'shop:update_cart_item' item.pk %}">
+                                {% csrf_token %}
+                                <label for="quantity-{{ item.pk }}">Qty</label>
+                                <input id="quantity-{{ item.pk }}" type="number" name="quantity" min="1" max="{{ item.product.stock }}" value="{{ item.quantity }}">
+                                <button class="small-button" type="submit">Update</button>
+                            </form>
+                            <form method="post" action="{% url 'shop:remove_cart_item' item.pk %}">
+                                {% csrf_token %}
+                                <button class="remove-button" type="submit">Remove</button>
+                            </form>
+                        </div>
+                        <span class="item-total">${{ item.line_total }}</span>
+                    </article>
+                {% endfor %}
+            </div>
+            <aside class="summary-card">
+                <h2>A little summary</h2>
+                <div class="summary-row"><span>Subtotal</span><span>${{ total }}</span></div>
+                <div class="summary-row"><span>Shipping</span><span>Calculated at checkout</span></div>
+                <div class="summary-row total"><span>Total</span><span>${{ total }}</span></div>
+                <a class="button button-dark" href="{% url 'shop:checkout' %}">Continue to checkout <span aria-hidden="true">→</span></a>
+                <a class="text-link continue-shopping" href="{% url 'shop:product_list' %}">Keep browsing</a>
+            </aside>
+        </div>
+    {% else %}
+        <div class="empty-cart">
+            <p>Your bag is taking a little breather.</p>
+            <a class="button button-dark" href="{% url 'shop:product_list' %}">Find something lovely <span aria-hidden="true">↗</span></a>
+        </div>
+    {% endif %}
+</section>
+{% endblock %}

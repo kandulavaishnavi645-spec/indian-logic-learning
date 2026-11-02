@@ -1,0 +1,25 @@
+{% extends 'shop/base.html' %}
+
+{% block title %}Order #{{ order.pk }} | Morrow{% endblock %}
+
+{% block content %}
+<section class="page-shell">
+    <a class="back-link" href="{% url 'shop:order_list' %}"><span aria-hidden="true">←</span> All orders</a>
+    <p class="eyebrow">Thanks for choosing thoughtfully</p>
+    <h1 class="page-title">Order #{{ order.pk }}<span class="title-dot">.</span></h1>
+    <div class="order-detail-card">
+        <span class="order-status">{{ order.get_status_display }}</span>
+        <p>Placed {{ order.created_at|date:"F j, Y" }}</p>
+        <h2>Your good things</h2>
+        {% for item in order.items.all %}
+            <div class="order-line"><span>{{ item.product_name }} × {{ item.quantity }}</span><span>${{ item.line_total }}</span></div>
+        {% endfor %}
+        <div class="order-line"><strong>Total</strong><strong>${{ order.total }}</strong></div>
+        <h2>Shipping to</h2>
+        <p>{{ order.full_name }}<br>{{ order.address_line_1 }}<br>
+            {% if order.address_line_2 %}{{ order.address_line_2 }}<br>{% endif %}
+            {{ order.city }}, {{ order.postal_code }}<br>{{ order.country }}
+        </p>
+    </div>
+</section>
+{% endblock %}

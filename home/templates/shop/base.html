@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f8f7f3">
+    <title>{% block title %}Morrow — Everyday, considered{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'home/css/shop.css' %}">
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <div class="announcement">A little something for your everyday <span>— free shipping on orders over $75</span></div>
+    <header class="site-header">
+        <div class="header-inner">
+            <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="primary-navigation">
+                <span></span><span></span>
+            </button>
+            <a class="brand" href="{% url 'shop:product_list' %}" aria-label="Morrow home">morrow<span>.</span></a>
+            <nav class="primary-nav" id="primary-navigation" aria-label="Main navigation">
+                <a href="{% url 'shop:product_list' %}">Shop all</a>
+                <a href="{% url 'shop:product_list' %}#collection">Our collection</a>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'shop:order_list' %}">My orders</a>
+                    <form class="nav-logout" method="post" action="{% url 'shop:logout' %}">
+                        {% csrf_token %}
+                        <button type="submit">Sign out</button>
+                    </form>
+                {% endif %}
+            </nav>
+            <div class="header-actions">
+                <a class="icon-link account-link" href="{% if user.is_authenticated %}{% url 'shop:order_list' %}{% else %}{% url 'shop:login' %}{% endif %}" aria-label="{% if user.is_authenticated %}My account{% else %}Log in{% endif %}">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"></circle><path d="M5 20c.5-3.5 3.2-5.5 7-5.5s6.5 2 7 5.5"></path></svg>
+                    <span>{% if user.is_authenticated %}Account{% else %}Sign in{% endif %}</span>
+                </a>
+                {% if user.is_authenticated %}
+                    <a class="icon-link bag-link" href="{% url 'shop:cart' %}" aria-label="Shopping bag">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l1 13H4L5 8Z"></path><path d="M9 9V6a3 3 0 0 1 6 0v3"></path></svg>
+                        <span>Bag</span>
+                    </a>
+                {% else %}
+                    <a class="icon-link bag-link" href="{% url 'shop:register' %}" aria-label="Create an account">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>
+                        <span>Join us</span>
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+    {% if messages %}
+        <div class="messages" role="status" aria-live="polite">
+            {% for message in messages %}
+                <p class="message message-{{ message.tags }}">{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+    <main id="main-content">
+        {% block content %}{% endblock %}
+    </main>
+    <footer class="site-footer">
+        <div class="footer-main">
+            <div class="footer-brand">
+                <a class="brand" href="{% url 'shop:product_list' %}">morrow<span>.</span></a>
+                <p>Good things for the everyday.<br>Thoughtfully found, made to be kept.</p>
+            </div>
+            <div class="footer-links">
+                <div><h2>Explore</h2><a href="{% url 'shop:product_list' %}">Shop all</a><a href="{% url 'shop:product_list' %}#collection">Our collection</a></div>
+                <div><h2>Need a hand?</h2><a href="{% url 'shop:product_list' %}">Shipping & returns</a><a href="{% url 'shop:product_list' %}">Get in touch</a></div>
+            </div>
+        </div>
+        <div class="footer-bottom"><span>© {% now "Y" %} Morrow. Made for your everyday.</span><span>Find your new favorite.</span></div>
+    </footer>
+    <script src="{% static 'home/js/shop.js' %}" defer></script>
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>
